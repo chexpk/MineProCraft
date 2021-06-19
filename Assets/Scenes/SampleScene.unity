@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 841138180}
   - component: {fileID: 841138182}
   - component: {fileID: 841138183}
+  - component: {fileID: 841138184}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -152,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0637a3702898a4b60b0004215f6335b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivityHor: 9
-  sensitivityVert: 9
+  sensitivity: 9
   minimumVert: -85
   maximumVert: 85
 --- !u!4 &841138181
@@ -164,7 +164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841138179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.61, z: 0}
+  m_LocalPosition: {x: 4.12, y: 4.83, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1786231521}
@@ -184,7 +184,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0233fc9deaac54ddc87babf2b2768d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
   speed: 6
+  jumpSpeed: 0.5
+  gravity: 1
+  playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &841138183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +204,24 @@ MonoBehaviour:
   camera: {fileID: 1786231520}
   voxelPref: {fileID: 250690492246787258, guid: 764e10cd33248448eae89b8fd74703f8,
     type: 3}
+--- !u!143 &841138184
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841138179}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1200274273
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200274273}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 841138181}
@@ -640,13 +662,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786231518}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 4, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 841138181}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!1 &1850407087
 GameObject:
   m_ObjectHideFlags: 0
