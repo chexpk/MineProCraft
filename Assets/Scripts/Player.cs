@@ -1,3 +1,5 @@
+using System;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -187,5 +189,23 @@ public class Player : MonoBehaviour
     public void SetPaintMode ()
     {
         _currentMode = Mode.PaintMode;
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+
+        if (hit.gameObject.CompareTag("MiniBlock"))
+        {
+            CollectMiniBlock(hit.gameObject);
+        }
+    }
+
+    void CollectMiniBlock(GameObject miniBlock)
+    {
+        MiniBlock block = miniBlock.GetComponent<MiniBlock>();
+        var item = block.GetItem();
+        block.DeleteMiniBlock();
+
+        inventory.CollectItem(item);
     }
 }

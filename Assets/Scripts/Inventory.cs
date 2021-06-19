@@ -68,4 +68,15 @@ public class Inventory : MonoBehaviour
         currentInventoryItem = items[index];
         cells[index].Select();
     }
+
+    public void CollectItem(Item item)
+    {
+        foreach (var currentItem in items)
+        {
+            if (currentItem.item.name == item.name)
+            {
+                currentItem.Increase();
+            }
+        }
+    }
 }

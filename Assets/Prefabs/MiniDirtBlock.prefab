@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7167653060322022273}
   - component: {fileID: 7224148287084749202}
   - component: {fileID: 2464070806152488987}
+  - component: {fileID: 2804590384917032397}
   m_Layer: 0
   m_Name: MiniDirtBlock
-  m_TagString: Untagged
+  m_TagString: MiniBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +76,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2804590384917032397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4852330533207898063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95510d32e587943778e740d887d2036e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1001 &4575431667152728975
 PrefabInstance:
   m_ObjectHideFlags: 0

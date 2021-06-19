@@ -15,6 +15,8 @@ public class Voxel : MonoBehaviour
     {
         Destroy(gameObject);
         var miniVoxel = Instantiate(item.miniPrefab, transform.position, Quaternion.identity);
+
+        miniVoxel.GetComponent<MiniBlock>().SetItem(item);
     }
 
     public void SetItem(Item item)
