@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Voxel : MonoBehaviour
 {
+    private Item item;
     public void SetMaterial (Material material)
     {
         GameObject cubeGO = transform.Find("Cube").gameObject;
@@ -13,5 +14,11 @@ public class Voxel : MonoBehaviour
     public void DeleteVoxel ()
     {
         Destroy(gameObject);
+        var miniVoxel = Instantiate(item.miniPrefab, transform.position, Quaternion.identity);
+    }
+
+    public void SetItem(Item item)
+    {
+        this.item = item;
     }
 }

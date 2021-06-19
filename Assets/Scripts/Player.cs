@@ -5,6 +5,8 @@ public class Player : MonoBehaviour
     {
     public Camera camera;
     public GameObject voxelPref;
+    [SerializeField]
+    private Inventory inventory;
     // public Palette palette;
 
     PlacePoint oldHitedPP = null;
@@ -106,8 +108,11 @@ public class Player : MonoBehaviour
 
         if (placePoint == null) return;
 
-        GameObject voxelGO = Instantiate(voxelPref, placePoint.GetPlacePosition(), Quaternion.identity);
+        // TODO: оформить вытаскивание "матрешки"
+        var pref = inventory.currentInventoryItem.item.prefab;
+        GameObject voxelGO = Instantiate(pref, placePoint.GetPlacePosition(), Quaternion.identity);
         Voxel voxel = voxelGO.GetComponent<Voxel>();
+        voxel.SetItem(inventory.currentInventoryItem.item);
         // Material material = palette.currentMaterial;
         // voxel.SetMaterial(material);
     }

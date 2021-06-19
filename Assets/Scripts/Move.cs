@@ -35,7 +35,7 @@ public class Move : MonoBehaviour
         // Jump
         if (Input.GetButton("Jump") && controller.isGrounded)
         {
-            playerVelocity.y = jumpSpeed;
+            playerVelocity.y = jumpSpeed; 
         }
 
         // Приземление
