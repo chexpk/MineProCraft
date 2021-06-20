@@ -205,7 +205,6 @@ public class Player : MonoBehaviour
         MiniBlock block = miniBlock.GetComponent<MiniBlock>();
         var item = block.GetItem();
         block.DeleteMiniBlock();
-
         inventory.CollectItem(item);
     }
 }

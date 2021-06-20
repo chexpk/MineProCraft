@@ -25,7 +25,6 @@ public class MiniBlock : MonoBehaviour
     public void DeleteMiniBlock ()
     {
         Destroy(gameObject);
-
     }
 
     public Item GetItem()

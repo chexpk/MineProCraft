@@ -73,6 +73,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (var currentItem in items)
         {
+            if (currentItem.item == null) continue;
             if (currentItem.item.name == item.name)
             {
                 currentItem.Increase();
