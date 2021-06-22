@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class InventoryCell : MonoBehaviour
 {
     [SerializeField] private Button button;
+    [SerializeField] private GameObject selectedFrame;
+    [SerializeField] private Text countItemInCell;
 
     public void SetInventoryItem(InventoryItem inventoryItem)
     {
@@ -13,17 +15,34 @@ public class InventoryCell : MonoBehaviour
         {
             RenderItemPreview(inventoryItem);
         }
+        DeactivateCellFrame();
     }
 
     public void Select()
     {
-        Debug.Log("ячейка выделилась");
+        ActivateCellFrame();
     }
-    
+
+    public void DeactivateCellFrame()
+    {
+        selectedFrame.SetActive(false);
+    }
 
     void RenderItemPreview(InventoryItem inventoryItem)
     {
         var sprite = inventoryItem.item.inventoryPreview;
         button.image.sprite = sprite;
     }
+
+    public void RenderCountItem(int countItem)
+    {
+        countItemInCell.text = countItem.ToString();
+    }
+
+    private void ActivateCellFrame()
+    {
+        selectedFrame.SetActive(true);
+    }
+
 }
+

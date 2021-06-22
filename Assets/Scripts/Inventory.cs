@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.SetInventoryItem(items[index]);
+            RenderCountItem(items[index], cell);
             index++;
         }
     }
@@ -66,18 +67,43 @@ public class Inventory : MonoBehaviour
     void SelectItem(int index)
     {
         currentInventoryItem = items[index];
+        UnSelectAllCells();
         cells[index].Select();
+    }
+
+    private void UnSelectAllCells()
+    {
+        int indexCell = 0;
+        foreach (var cell in cells)
+        {
+            cell.DeactivateCellFrame();
+            indexCell++;
+        }
     }
 
     public void CollectItem(Item item)
     {
+        int index = 0;
         foreach (var currentItem in items)
         {
-            if (currentItem.item == null) continue;
+
+            if (currentItem.item == null) //адекватная проверка?
+            {
+                index++;
+                continue;
+            }
             if (currentItem.item.name == item.name)
             {
                 currentItem.Increase();
+                RenderCountItem(currentItem, cells[index]);
             }
+            index++;
         }
+    }
+
+    void RenderCountItem(InventoryItem inventoryItem, InventoryCell inventoryCell)
+    {
+        var countInt = inventoryItem.GetCount();
+        inventoryCell.RenderCountItem(countInt);
     }
 }
