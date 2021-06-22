@@ -11,6 +11,7 @@ public class InventoryItem
     public void Increase()
     {
         count++;
+        SetExist(count);
     }
 
     public int GetCount()
@@ -18,5 +19,21 @@ public class InventoryItem
         return count;
     }
 
+    public void Decriase()
+    {
+        count--;
+        SetExist(count);
+    }
 
+    void SetExist(int count)
+    {
+        if (count > 0)
+        {
+            isExist = true;
+        }
+        else
+        {
+            isExist = false;
+        }
+    }
 }

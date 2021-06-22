@@ -101,6 +101,26 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void DecreaseCountItem()
+    {
+        currentInventoryItem.Decriase();
+        int index = 0;
+        foreach (var currentItem in items)
+        {
+
+            if (currentItem.item == null) //адекватная проверка?
+            {
+                index++;
+                continue;
+            }
+            if (currentItem.item.name == currentInventoryItem.item.name)
+            {
+                RenderCountItem(currentItem, cells[index]);
+            }
+            index++;
+        }
+    }
+
     void RenderCountItem(InventoryItem inventoryItem, InventoryCell inventoryCell)
     {
         var countInt = inventoryItem.GetCount();

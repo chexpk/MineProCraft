@@ -115,6 +115,10 @@ public class Player : MonoBehaviour
         GameObject voxelGO = Instantiate(pref, placePoint.GetPlacePosition(), Quaternion.identity);
         Voxel voxel = voxelGO.GetComponent<Voxel>();
         voxel.SetItem(inventory.currentInventoryItem.item);
+
+        // TODO: оформить вытаскивание "матрешки"?
+        DecreaseCountItem();
+
         // Material material = palette.currentMaterial;
         // voxel.SetMaterial(material);
     }
@@ -123,11 +127,8 @@ public class Player : MonoBehaviour
     {
         GameObject parentHittedGO = hit.transform.parent.gameObject;
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();
-
         if (voxel == null) return;
-
         voxel.DeleteVoxel();
-
     }
 
     void PaintVoxelOnHit(RaycastHit hit)
@@ -206,5 +207,10 @@ public class Player : MonoBehaviour
         var item = block.GetItem();
         block.DeleteMiniBlock();
         inventory.CollectItem(item);
+    }
+
+    void DecreaseCountItem()
+    {
+        inventory.DecreaseCountItem();
     }
 }

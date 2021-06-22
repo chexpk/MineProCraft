@@ -1775,10 +1775,10 @@ MonoBehaviour:
   items:
   - item: {fileID: 11400000, guid: 17410bc1a184a4025a997661b83f9320, type: 2}
     isExist: 1
-    count: 0
+    count: 3
   - item: {fileID: 11400000, guid: 71e6a4e4a7a7349c6bca832a31b6f312, type: 2}
     isExist: 1
-    count: 0
+    count: 3
   - item: {fileID: 0}
     isExist: 0
     count: 0
