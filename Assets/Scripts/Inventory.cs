@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public InventoryItem[] items = new InventoryItem[9];
+    private static int maxInventoryItems = 9;
+    public InventoryItem[] items = new InventoryItem[maxInventoryItems];
     public InventoryCell[] cells;
     public InventoryItem currentInventoryItem;
+    public InventoryCell currentInventoryCell;
 
 
     private void Start()
@@ -14,6 +16,7 @@ public class Inventory : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.SetInventoryItem(items[index]);
+            items[index].SetIndexCell(index);
             RenderCountItem(items[index], cell);
             index++;
         }
@@ -66,9 +69,10 @@ public class Inventory : MonoBehaviour
 
     void SelectItem(int index)
     {
+        currentInventoryCell = cells[index];
         currentInventoryItem = items[index];
         UnSelectAllCells();
-        cells[index].Select();
+        currentInventoryCell.Select();
     }
 
     private void UnSelectAllCells()
@@ -94,31 +98,50 @@ public class Inventory : MonoBehaviour
             }
             if (currentItem.item.name == item.name)
             {
+                // обернуть в метод, в котором выбирать ячейку для прибавления countItems
                 currentItem.Increase();
                 RenderCountItem(currentItem, cells[index]);
+                return;
             }
             index++;
         }
+        //если index >= maxInventoryItems, то поиск свободной ячейки и присвоение ей inventoryItems.
+        //или все будет по одному алгоритму? и нужен только метод для выбора ячейкив которой будет
+        //увиличиваться число айтемов?
     }
-
+    //тут остановился (как убрать индекс ячейки из поля inventoryItem?
     public void DecreaseCountItem()
     {
-        currentInventoryItem.Decriase();
-        int index = 0;
-        foreach (var currentItem in items)
+        currentInventoryItem.Decrease();
+        //проверка на isExist, если да, то
+        if (currentInventoryItem.isExist)
         {
-
-            if (currentItem.item == null) //адекватная проверка?
-            {
-                index++;
-                continue;
-            }
-            if (currentItem.item.name == currentInventoryItem.item.name)
-            {
-                RenderCountItem(currentItem, cells[index]);
-            }
-            index++;
+            var countInt = currentInventoryItem.GetCount();
+            currentInventoryCell.RenderCountItem(countInt);
         }
+        else
+        {
+            //очистить привязку inventoryItem к ячейкам
+            currentInventoryItem.ClearInventoryItem();
+            //очистить привязку к inventoryItem, перерисовать пустую ячейку
+            currentInventoryCell.ClearCell();
+        }
+
+
+        // int index = 0;
+        // foreach (var currentItem in items)
+        // {
+        //     if (currentItem.item == null) //адекватная проверка?
+        //     {
+        //         index++;
+        //         continue;
+        //     }
+        //     if (currentItem.item.name == currentInventoryItem.item.name)
+        //     {
+        //         RenderCountItem(currentItem, cells[index]);
+        //     }
+        //     index++;
+        // }
     }
 
     void RenderCountItem(InventoryItem inventoryItem, InventoryCell inventoryCell)
