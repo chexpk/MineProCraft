@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class InventoryCell : MonoBehaviour
 {
-    public InventoryItem inventoryItemInCell;
-    public bool isEmpty = true;
-    public bool isFull = false;
+    // public InventoryItem inventoryItemInCell;
+    // public bool isEmpty = true;
+    // public bool isFull = false;
     [SerializeField] private Button button;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
-    [SerializeField] int indexInArray; //временно
+    // [SerializeField] int indexInArray; //временно
 
 
     public void SetInventoryItem(InventoryItem inventoryItem)
@@ -20,8 +20,8 @@ public class InventoryCell : MonoBehaviour
         if (inventoryItem.isExist)
         {
             RenderItemPreview(inventoryItem);
-            inventoryItemInCell = inventoryItem;
-            isEmpty = false;
+            // inventoryItemInCell = inventoryItem;
+            // isEmpty = false;
         }
         DeactivateCellFrame();
     }
@@ -51,9 +51,9 @@ public class InventoryCell : MonoBehaviour
     {
         button.image.sprite = null; //так работает? если нет, то картинку на пустую ячейку найти
         countItemInCell.text = " ";
-        isEmpty = true;
-        inventoryItemInCell = null;
-        isFull = false;
+        // isEmpty = true;
+        // inventoryItemInCell = null;
+        // isFull = false;
     }
     private void ActivateCellFrame()
     {
@@ -62,14 +62,14 @@ public class InventoryCell : MonoBehaviour
 
 
     //ниже представлены методы временные - удалить после реализации иного метода хранения адреса ячеек в inventoryItems
-    public void SetIndexInArray(int index)
-    {
-        indexInArray = index;
-    }
-
-    public int GetIndexInArray()
-    {
-        return indexInArray;
-    }
+    // public void SetIndexInArray(int index)
+    // {
+    //     indexInArray = index;
+    // }
+    //
+    // public int GetIndexInArray()
+    // {
+    //     return indexInArray;
+    // }
 }
 

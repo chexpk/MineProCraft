@@ -9,7 +9,7 @@ public class InventoryItem
     public bool isExist = false;
     public int count = 10;
     // [SerializeField] private int indexCell;
-    [SerializeField] private List<int> indexCellsList;
+    public int indexOfCellAndInventoryItem;
 
 
     public void Increase()
@@ -29,33 +29,20 @@ public class InventoryItem
         SetExist(count);
     }
 
-    public void SetIndexCell(int index)
+    public void SetIndex(int index)
     {
-        // indexCell = index;
-        indexCellsList.Add(index);
+        indexOfCellAndInventoryItem = index;
     }
 
-    public List<int> GetIndexCell()
+    public int GetIndex()
     {
-        return indexCellsList;
-    }
-
-    public void RemoveFromIndexCellsList(int index)
-    {
-        foreach (var indexCell in indexCellsList)
-        {
-            if (indexCell == index)
-            {
-                indexCellsList.Remove(index);
-            }
-        }
+        return indexOfCellAndInventoryItem;
     }
 
     public void ClearInventoryItem()
     {
         item = null;
         isExist = false;
-        indexCellsList.Clear();
         count = 0;
     }
 
