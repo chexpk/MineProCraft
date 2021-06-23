@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -16,6 +17,7 @@ public class Inventory : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.SetInventoryItem(items[index]);
+            cell.SetIndexInArray(index); //удалить после реализации иного метода хранения адреса ячеек
             items[index].SetIndexCell(index);
             RenderCountItem(items[index], cell);
             index++;
@@ -85,6 +87,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    //подготовка к WIP
     public void CollectItem(Item item)
     {
         int index = 0;
@@ -100,16 +103,45 @@ public class Inventory : MonoBehaviour
             {
                 // обернуть в метод, в котором выбирать ячейку для прибавления countItems
                 currentItem.Increase();
-                RenderCountItem(currentItem, cells[index]);
+                var cell = SelectCellToIncreaseCountItem(currentItem);
+                cell.inventoryItemInCell = currentItem;
+                //в этом моменте я понял, что хранить адрес ячейки в виде индекса - плохо))) нужно придумать как
+                // может быть прямо List  с ячейками?
+                var indexCell = cell.GetIndexInArray();
+                currentItem.SetIndexCell(indexCell);
+                RenderCountItem(currentItem, cell);
                 return;
             }
             index++;
+        }
+
+        if (index >= maxInventoryItems)
+        {
+            foreach (var inventoryItem in items)
+            {
+                if (!inventoryItem.isExist)
+                {
+                    // Debug.Log(inventoryItem.isExist);
+
+                    inventoryItem.item = item;
+                    inventoryItem.Increase();
+
+                    // Debug.Log(inventoryItem.isExist);
+
+                    var cell = SelectCellToIncreaseCountItem(inventoryItem);
+                    cell.SetInventoryItem(inventoryItem);
+                    // cell.inventoryItemInCell = inventoryItem;
+                    var indexCell = cell.GetIndexInArray();
+                    inventoryItem.SetIndexCell(indexCell);
+                    RenderCountItem(inventoryItem, cell);
+                    return;
+                }
+            }
         }
         //если index >= maxInventoryItems, то поиск свободной ячейки и присвоение ей inventoryItems.
         //или все будет по одному алгоритму? и нужен только метод для выбора ячейкив которой будет
         //увиличиваться число айтемов?
     }
-    //тут остановился (как убрать индекс ячейки из поля inventoryItem?
     public void DecreaseCountItem()
     {
         currentInventoryItem.Decrease();
@@ -126,27 +158,37 @@ public class Inventory : MonoBehaviour
             //очистить привязку к inventoryItem, перерисовать пустую ячейку
             currentInventoryCell.ClearCell();
         }
-
-
-        // int index = 0;
-        // foreach (var currentItem in items)
-        // {
-        //     if (currentItem.item == null) //адекватная проверка?
-        //     {
-        //         index++;
-        //         continue;
-        //     }
-        //     if (currentItem.item.name == currentInventoryItem.item.name)
-        //     {
-        //         RenderCountItem(currentItem, cells[index]);
-        //     }
-        //     index++;
-        // }
     }
 
     void RenderCountItem(InventoryItem inventoryItem, InventoryCell inventoryCell)
     {
         var countInt = inventoryItem.GetCount();
         inventoryCell.RenderCountItem(countInt);
+    }
+
+    //TODO: переписать метод
+    InventoryCell SelectCellToIncreaseCountItem(InventoryItem inventoryItem)
+    {
+        InventoryCell result = null; //как это правильно написать?
+        List<int> indexes = inventoryItem.GetIndexCell();
+        foreach (var index in indexes)
+        {
+            if (!cells[index].isFull)
+            {
+                // Debug.Log("есть не полные");
+                return cells[index];
+            }
+        }
+        foreach (var cell in cells)
+        {
+            if (cell.isEmpty)
+            {
+                // Debug.Log("есть пустые");
+                result = cell;
+                return result;
+            }
+        }
+        Debug.Log("все ячейки заполнены");
+        return result;
     }
 }
