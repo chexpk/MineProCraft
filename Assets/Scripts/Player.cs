@@ -9,17 +9,7 @@ public class Player : MonoBehaviour
     public GameObject voxelPref;
     [SerializeField]
     private Inventory inventory;
-    // public Palette palette;
-
     PlacePoint oldHitedPP = null;
-
-    enum Mode
-    {
-        CreateMode = 0,
-        PaintMode = 1
-    }
-
-    Mode _currentMode = Mode.CreateMode;
 
     void Start()
     {
@@ -29,24 +19,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         RaycastSelectPlacePoint();
-        RaycastTool();
+        CreateMode();
     }
 
-    void RaycastTool()
-    {
-        if (_currentMode == Mode.CreateMode)
-        {
-            CreateModeRaycast();
-            return;
-        }
-
-        if (_currentMode == Mode.PaintMode)
-        {
-            PaintModeRaycast();
-        }
-    }
-
-    void CreateModeRaycast()
+    void CreateMode()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -56,14 +32,6 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             DeleteVoxel();
-        }
-    }
-
-    void PaintModeRaycast()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            PaintVoxel();
         }
     }
 
@@ -87,16 +55,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void PaintVoxel()
-    {
-        RaycastHit hit;
-
-        if (RaycastMousePosition(out hit))
-        {
-            PaintVoxelOnHit(hit);
-        }
-    }
-
     bool RaycastMousePosition(out RaycastHit hit)
     {
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
@@ -110,17 +68,12 @@ public class Player : MonoBehaviour
 
         if (placePoint == null) return;
 
-        // TODO: оформить вытаскивание "матрешки"
-        var pref = inventory.currentInventoryItem.item.prefab;
+        var pref = GetCurrentPrefab();
         GameObject voxelGO = Instantiate(pref, placePoint.GetPlacePosition(), Quaternion.identity);
         Voxel voxel = voxelGO.GetComponent<Voxel>();
         voxel.SetItem(inventory.currentInventoryItem.item);
 
-        // TODO: оформить вытаскивание "матрешки"?
         DecreaseCountItem();
-
-        // Material material = palette.currentMaterial;
-        // voxel.SetMaterial(material);
     }
 
     void DeleteVoxelOnHit(RaycastHit hit)
@@ -128,18 +81,8 @@ public class Player : MonoBehaviour
         GameObject parentHittedGO = hit.transform.parent.gameObject;
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();
         if (voxel == null) return;
+        // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
         voxel.DeleteVoxel();
-    }
-
-    void PaintVoxelOnHit(RaycastHit hit)
-    {
-        GameObject parentHittedGO = hit.transform.parent.gameObject;
-        Voxel voxel = parentHittedGO.GetComponent<Voxel>();
-
-        if (voxel == null) return;
-
-        // Material material = palette.currentMaterial;
-        // voxel.SetMaterial(material);
     }
 
     void RaycastSelectPlacePoint ()
@@ -155,7 +98,6 @@ public class Player : MonoBehaviour
             UnSelectPlacePoint(oldHitedPP);
             oldHitedPP = null;
         }
-
     }
 
     void SelectPlacePointOnHit(RaycastHit hit)
@@ -182,19 +124,8 @@ public class Player : MonoBehaviour
         placePoint.UnSelectPoint();
     }
 
-    public void SetCreateMode ()
-    {
-        _currentMode = Mode.CreateMode;
-    }
-
-    public void SetPaintMode ()
-    {
-        _currentMode = Mode.PaintMode;
-    }
-
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-
         if (hit.gameObject.CompareTag("MiniBlock"))
         {
             CollectMiniBlock(hit.gameObject);
@@ -204,13 +135,21 @@ public class Player : MonoBehaviour
     void CollectMiniBlock(GameObject miniBlock)
     {
         MiniBlock block = miniBlock.GetComponent<MiniBlock>();
-        var item = block.GetItem();
-        block.DeleteMiniBlock();
-        inventory.CollectItem(item);
+        if (block.IsExist())
+        {
+            var item = block.GetItem();
+            block.DeleteMiniBlock();
+            inventory.CollectItem(item);
+        }
     }
 
     void DecreaseCountItem()
     {
         inventory.DecreaseCountItem();
+    }
+
+     GameObject GetCurrentPrefab()
+    {
+        return inventory.GetCurrentItemPrefab();
     }
 }

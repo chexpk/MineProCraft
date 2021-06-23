@@ -7,15 +7,14 @@ public class InventoryItem
 {
     public Item item;
     public bool isExist = false;
-    public int count = 10;
-    // [SerializeField] private int indexCell;
-    public int indexOfCellAndInventoryItem;
-
+    public int count = 0;
+    public InventoryCell cell;
 
     public void Increase()
     {
         count++;
         SetExist(count);
+        RenderCountItem();
     }
 
     public int GetCount()
@@ -29,14 +28,16 @@ public class InventoryItem
         SetExist(count);
     }
 
-    public void SetIndex(int index)
+    public void SetCell(InventoryCell cell)
     {
-        indexOfCellAndInventoryItem = index;
+        this.cell = cell;
+        SetInventoryItemInCell();
+        RenderCountItem();
     }
 
-    public int GetIndex()
+    public void SetInventoryItemInCell()
     {
-        return indexOfCellAndInventoryItem;
+        cell.SetInventoryItem(this);
     }
 
     public void ClearInventoryItem()
@@ -44,8 +45,22 @@ public class InventoryItem
         item = null;
         isExist = false;
         count = 0;
+        cell.ClearCell();
     }
 
+    public void RenderCountItem()
+    {
+        cell.RenderCountItem(count);
+    }
+
+    public void UnselectCell()
+    {
+        cell.DeactivateCellFrame();
+    }
+    public void Select()
+    {
+        cell.ActivateCellFrame();
+    }
     void SetExist(int count)
     {
         if (count > 0)

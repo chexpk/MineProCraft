@@ -8,8 +8,6 @@ public class Inventory : MonoBehaviour
     public InventoryItem[] items = new InventoryItem[maxInventoryItems];
     public InventoryCell[] cells;
     public InventoryItem currentInventoryItem;
-    public InventoryCell currentInventoryCell;
-
 
     private void Start()
     {
@@ -22,9 +20,7 @@ public class Inventory : MonoBehaviour
         foreach (var cell in cells)
         {
             var inventoryItem = items[index];
-            cell.SetInventoryItem(inventoryItem);
-            inventoryItem.SetIndex(index);
-            RenderCountItem(inventoryItem, cell);
+            inventoryItem.SetCell(cell);
             index++;
         }
     }
@@ -76,19 +72,18 @@ public class Inventory : MonoBehaviour
 
     void SelectItem(int index)
     {
-        currentInventoryCell = cells[index];
         currentInventoryItem = items[index];
-        UnSelectAllCells();
-        currentInventoryCell.Select();
+        UnSelectAllInventory();
+        currentInventoryItem.Select();
     }
 
-    private void UnSelectAllCells()
+    private void UnSelectAllInventory()
     {
-        int indexCell = 0;
-        foreach (var cell in cells)
+        int index = 0;
+        foreach (var item in items)
         {
-            cell.DeactivateCellFrame();
-            indexCell++;
+            item.UnselectCell();
+            index++;
         }
     }
 
@@ -105,10 +100,6 @@ public class Inventory : MonoBehaviour
             if (currentItem.item.name == item.name)
             {
                 currentItem.Increase();
-
-                // засунуть запрос на рендер внутрь inventoryItem
-                var cell = cells[currentItem.GetIndex()];
-                RenderCountItem(currentItem, cell);
                 return;
             }
             index++;
@@ -121,14 +112,9 @@ public class Inventory : MonoBehaviour
                 //в перспективе добавить проверку на заполненность
                 if (!inventoryItem.isExist)
                 {
-                    inventoryItem.item = item;
+                    inventoryItem.item = item; //обернуть в метод?
                     inventoryItem.Increase();
-
-
-                    var cell = cells[inventoryItem.GetIndex()];
-                    cell.SetInventoryItem(inventoryItem);
-
-                    RenderCountItem(inventoryItem, cell);
+                    inventoryItem.SetInventoryItemInCell();
                     return;
                 }
             }
@@ -139,20 +125,17 @@ public class Inventory : MonoBehaviour
         currentInventoryItem.Decrease();
         if (currentInventoryItem.isExist)
         {
-            var countInt = currentInventoryItem.GetCount();
-            currentInventoryCell.RenderCountItem(countInt);
+            currentInventoryItem.RenderCountItem();
         }
         else
         {
             currentInventoryItem.ClearInventoryItem();
-            currentInventoryCell.ClearCell();
-            currentInventoryCell.Select();
+            currentInventoryItem.Select();
         }
     }
 
-    void RenderCountItem(InventoryItem inventoryItem, InventoryCell inventoryCell)
+    public GameObject GetCurrentItemPrefab()
     {
-        var countInt = inventoryItem.GetCount();
-        inventoryCell.RenderCountItem(countInt);
+        return currentInventoryItem.item.prefab;
     }
 }

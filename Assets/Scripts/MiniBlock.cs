@@ -5,6 +5,8 @@ using UnityEngine;
 public class MiniBlock : MonoBehaviour
 {
     public Item item;
+
+    public bool isExist = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +26,17 @@ public class MiniBlock : MonoBehaviour
 
     public void DeleteMiniBlock ()
     {
+        isExist = false;
         Destroy(gameObject);
     }
 
     public Item GetItem()
     {
         return item;
+    }
+
+    public bool IsExist()
+    {
+        return isExist;
     }
 }
