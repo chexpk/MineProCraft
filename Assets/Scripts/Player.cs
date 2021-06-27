@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
         inventory.DecreaseCountItem();
     }
 
-     GameObject GetCurrentPrefab()
+    GameObject GetCurrentPrefab()
     {
         return inventory.GetCurrentItemPrefab();
     }

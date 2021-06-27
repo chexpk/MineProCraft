@@ -13,19 +13,14 @@ public class InventoryItem
     public void Increase()
     {
         count++;
-        SetExist(count);
+        SetExist();
         RenderCountItem();
-    }
-
-    public int GetCount()
-    {
-        return count;
     }
 
     public void Decrease()
     {
         count--;
-        SetExist(count);
+        SetExist();
     }
 
     public void SetCell(InventoryCell cell)
@@ -57,11 +52,13 @@ public class InventoryItem
     {
         cell.DeactivateCellFrame();
     }
+
     public void Select()
     {
         cell.ActivateCellFrame();
     }
-    void SetExist(int count)
+
+    void SetExist()
     {
         if (count > 0)
         {

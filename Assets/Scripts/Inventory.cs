@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         SetInventoryItemsToCells();
+        SelectItem(0);
     }
 
     private void SetInventoryItemsToCells()
@@ -87,42 +88,55 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void CollectItem(Item item)
+    public bool CollectItem(Item item)
     {
-        int index = 0;
-        foreach (var currentItem in items)
+        var inventoryItem = FindInventoryItem(item);
+        if (inventoryItem != null)
         {
-            if (currentItem.item == null) //адекватная проверка?
-            {
-                index++;
-                continue;
-            }
-            if (currentItem.item.name == item.name)
-            {
-                currentItem.Increase();
-                return;
-            }
-            index++;
+            //в перспективе добавить проверку на заполненность
+            inventoryItem.Increase();
+            return true;
         }
 
-        if (index >= maxInventoryItems)
+        var emptyInventoryItem = FindFirstEmptyInventoryItem();
+        if (emptyInventoryItem != null)
         {
-            foreach (var inventoryItem in items)
+            emptyInventoryItem.Increase();
+            emptyInventoryItem.item = item;
+            emptyInventoryItem.SetInventoryItemInCell();
+            return true;
+        }
+        return false;
+    }
+
+    InventoryItem FindInventoryItem(Item item)
+    {
+        foreach (var currentItem in items)
+        {
+            if (currentItem.isExist && currentItem.item == item)
             {
-                //в перспективе добавить проверку на заполненность
-                if (!inventoryItem.isExist)
-                {
-                    inventoryItem.item = item; //обернуть в метод?
-                    inventoryItem.Increase();
-                    inventoryItem.SetInventoryItemInCell();
-                    return;
-                }
+                return currentItem;
             }
         }
+        return null;
     }
+
+    InventoryItem FindFirstEmptyInventoryItem()
+    {
+        foreach (var inventoryItem in items)
+        {
+            if (!inventoryItem.isExist)
+            {
+                return inventoryItem;
+            }
+        }
+        return null;
+    }
+
     public void DecreaseCountItem()
     {
         currentInventoryItem.Decrease();
+        //возможно засунуть в Decrease
         if (currentInventoryItem.isExist)
         {
             currentInventoryItem.RenderCountItem();
