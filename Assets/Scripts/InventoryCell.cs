@@ -32,8 +32,6 @@ public class InventoryCell : MonoBehaviour
 
     void RenderItemPreview(InventoryItem inventoryItem)
     {
-        Debug.Log(inventoryItem);
-        Debug.Log(inventoryItem.item);
         var sprite = inventoryItem.item.inventoryPreview;
         button.image.sprite = sprite;
     }
