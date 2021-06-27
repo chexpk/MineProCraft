@@ -5,6 +5,8 @@ using UnityEngine;
 public class Voxel : MonoBehaviour
 {
     private Item item;
+    //поле здоровья?
+
     public void SetMaterial (Material material)
     {
         GameObject cubeGO = transform.Find("Cube").gameObject;

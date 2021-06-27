@@ -4,22 +4,57 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public float sensitivity = 9.0f;
-    public float minimumVert = -45.0f;
-    public float maximumVert = 45.0f;
+    public enum RotationAxes
+    {
+        MouseXAndY = 0,
+        MouseX = 1,
+        MouseY = 2
+    }
+    public RotationAxes axes = RotationAxes.MouseXAndY;
+
+
+    public float sensitivityHor = 9.0f;
+    public float sensitivityVert = 9.0f;
+
+    public float minimumVert = -85.0f;
+    public float maximumVert = 85.0f;
+
     private float _rotationX = 0;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        Rigidbody body = GetComponent<Rigidbody>();
+        if (body != null)
+            body.freezeRotation = true;
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        // вращается все прикрепленное к Player
-        float deltaX = Input.GetAxis("Mouse Y") * sensitivity;
-        _rotationX -= deltaX;
-        _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
+        if (axes == RotationAxes.MouseX)
+        {
+            transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityHor, 0);
+        }
+        else if (axes == RotationAxes.MouseY)
+        {
+            _rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
+            _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
 
-        float deltaY = Input.GetAxis("Mouse X") * sensitivity;
-        float rotationY = transform.localEulerAngles.y + deltaY;
+            float rotationY = transform.localEulerAngles.y;
 
-        transform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
+            transform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
+        }
+        else
+        {
+            _rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
+            _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
+
+            float delta = Input.GetAxis("Mouse X") * sensitivityHor;
+            float rotationY = transform.localEulerAngles.y + delta;
+
+            transform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
+        }
     }
 }
 
