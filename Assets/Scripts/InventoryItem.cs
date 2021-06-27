@@ -10,42 +10,50 @@ public class InventoryItem
     public int count = 0;
     public InventoryCell cell;
 
+    public void Render()
+    {
+        cell.Render(this);
+    }
+
     public void Increase()
     {
         count++;
         SetExist();
-        RenderCountItem();
+        Render();
     }
 
     public void Decrease()
     {
         count--;
         SetExist();
+        if (!isExist)
+        {
+            ClearInventoryItem();
+        }
+        Render();
     }
 
     public void SetCell(InventoryCell cell)
     {
         this.cell = cell;
-        SetInventoryItemInCell();
-        RenderCountItem();
+        Render();
     }
 
     public void SetInventoryItemInCell()
     {
-        cell.SetInventoryItem(this);
+        Render();
     }
 
-    public void ClearInventoryItem()
+    void ClearInventoryItem()
     {
         item = null;
         isExist = false;
         count = 0;
-        cell.ClearCell();
     }
 
     public void RenderCountItem()
     {
-        cell.RenderCountItem(count);
+        Render();
     }
 
     public void UnselectCell()
@@ -69,4 +77,5 @@ public class InventoryItem
             isExist = false;
         }
     }
+
 }

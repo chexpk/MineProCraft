@@ -101,9 +101,8 @@ public class Inventory : MonoBehaviour
         var emptyInventoryItem = FindFirstEmptyInventoryItem();
         if (emptyInventoryItem != null)
         {
-            emptyInventoryItem.Increase();
             emptyInventoryItem.item = item;
-            emptyInventoryItem.SetInventoryItemInCell();
+            emptyInventoryItem.Increase();
             return true;
         }
         return false;
@@ -136,16 +135,6 @@ public class Inventory : MonoBehaviour
     public void DecreaseCountItem()
     {
         currentInventoryItem.Decrease();
-        //возможно засунуть в Decrease
-        if (currentInventoryItem.isExist)
-        {
-            currentInventoryItem.RenderCountItem();
-        }
-        else
-        {
-            currentInventoryItem.ClearInventoryItem();
-            currentInventoryItem.Select();
-        }
     }
 
     public GameObject GetCurrentItemPrefab()

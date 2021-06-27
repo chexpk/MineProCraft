@@ -7,13 +7,22 @@ public class InventoryCell : MonoBehaviour
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
 
-    public void SetInventoryItem(InventoryItem inventoryItem)
+    public void Render(InventoryItem inventoryItem)
     {
         if (inventoryItem.isExist)
         {
-            RenderItemPreview(inventoryItem);
+            SetInventoryItem(inventoryItem);
+            RenderCountItem(inventoryItem.count);
         }
-        DeactivateCellFrame();
+        else
+        {
+            ClearCell();
+        }
+    }
+
+    public void ActivateCellFrame()
+    {
+        selectedFrame.SetActive(true);
     }
 
     public void DeactivateCellFrame()
@@ -23,23 +32,30 @@ public class InventoryCell : MonoBehaviour
 
     void RenderItemPreview(InventoryItem inventoryItem)
     {
+        Debug.Log(inventoryItem);
+        Debug.Log(inventoryItem.item);
         var sprite = inventoryItem.item.inventoryPreview;
         button.image.sprite = sprite;
     }
 
-    public void RenderCountItem(int countItem)
+    void RenderCountItem(int countItem)
     {
         countItemInCell.text = countItem.ToString();
     }
 
-    public void ClearCell()
+    void SetInventoryItem(InventoryItem inventoryItem)
+    {
+        if (inventoryItem.isExist)
+        {
+            RenderItemPreview(inventoryItem);
+        }
+        // DeactivateCellFrame();
+    }
+
+    void ClearCell()
     {
         button.image.sprite = null;
         countItemInCell.text = " ";
-    }
-    public void ActivateCellFrame()
-    {
-        selectedFrame.SetActive(true);
     }
 }
 
