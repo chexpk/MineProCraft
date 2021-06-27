@@ -5,19 +5,20 @@ using UnityEngine;
 public class Voxel : MonoBehaviour
 {
     private Item item;
+    private int durability = 3;
     //поле здоровья?
 
-    public void SetMaterial (Material material)
-    {
-        GameObject cubeGO = transform.Find("Cube").gameObject;
-        cubeGO.GetComponent<Renderer>().material = material;
-    }
+    // public void SetMaterial (Material material)
+    // {
+    //     GameObject cubeGO = transform.Find("Cube").gameObject;
+    //     cubeGO.GetComponent<Renderer>().material = material;
+    // }
 
     public void DeleteVoxel ()
     {
         Destroy(gameObject);
-        var miniVoxel = Instantiate(item.miniPrefab, transform.position, Quaternion.identity);
 
+        var miniVoxel = Instantiate(item.miniPrefab, transform.position, Quaternion.identity);
         miniVoxel.GetComponent<MiniBlock>().SetItem(item);
     }
 
@@ -25,4 +26,15 @@ public class Voxel : MonoBehaviour
     {
         this.item = item;
     }
+
+    public void DecreaseHealth()
+    {
+        durability--;
+        if (durability <= 0)
+        {
+            DeleteVoxel();
+        }
+    }
+
+
 }

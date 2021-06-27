@@ -76,14 +76,21 @@ public class Player : MonoBehaviour
         DecreaseCountItem();
     }
 
-    void DeleteVoxelOnHit(RaycastHit hit)
+    void DeleteVoxelOnHit(RaycastHit hit) // rename InteractVoxelOnHit or HitVoxelOnHit ?
     {
         GameObject parentHittedGO = hit.transform.parent.gameObject;
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();
         if (voxel == null) return;
         // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
-        voxel.DeleteVoxel();
+        voxel.DecreaseHealth();
+
+        // voxel.DeleteVoxel();
     }
+
+    // void DecreaseVoxelDurability(Voxel voxel)
+    // {
+    //     voxel.DecreaseHealth();
+    // }
 
     void RaycastSelectPlacePoint ()
     {
