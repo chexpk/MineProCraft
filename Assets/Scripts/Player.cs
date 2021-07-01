@@ -142,11 +142,10 @@ public class Player : MonoBehaviour
     void CollectMiniBlock(GameObject miniBlock)
     {
         MiniBlock block = miniBlock.GetComponent<MiniBlock>();
-        if (block.IsExist())
+        var item = block.GetItem();
+        if (block.IsExist() && inventory.CollectItem(item))
         {
-            var item = block.GetItem();
             block.DeleteMiniBlock();
-            inventory.CollectItem(item);
         }
     }
 
