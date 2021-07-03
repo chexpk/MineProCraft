@@ -7,9 +7,12 @@ public class InventoryCell : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
+    private InventoryItem inventoryItem;
+
 
     public void Render(InventoryItem inventoryItem)
     {
+        this.inventoryItem = inventoryItem;
         if (inventoryItem.isExist)
         {
             SetInventoryItem(inventoryItem);
@@ -29,6 +32,11 @@ public class InventoryCell : MonoBehaviour
     public void DeactivateCellFrame()
     {
         selectedFrame.SetActive(false);
+    }
+
+    public InventoryItem GetInventoryItem()
+    {
+        return inventoryItem;
     }
 
     void RenderItemPreview(InventoryItem inventoryItem)

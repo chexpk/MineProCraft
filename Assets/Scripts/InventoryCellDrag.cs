@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 public class InventoryCellDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     RectTransform rectTransform;
-    private Vector2 basePosition;
+    // private Vector2 basePosition;
+    [SerializeField] private InventoryCell inventoryCell;
 
     private void Awake()
     {
@@ -14,7 +15,8 @@ public class InventoryCellDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandl
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
-        basePosition = rectTransform.anchoredPosition;
+        // basePosition = rectTransform.anchoredPosition;
+        var inventoryItem = GetInventoryItem();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -25,6 +27,11 @@ public class InventoryCellDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandl
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta;
+        // rectTransform.anchoredPosition += eventData.delta;
+    }
+
+    public InventoryItem GetInventoryItem()
+    {
+        return inventoryCell.GetInventoryItem();
     }
 }

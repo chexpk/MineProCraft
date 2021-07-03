@@ -66,6 +66,21 @@ public class InventoryItem
         cell.ActivateCellFrame();
     }
 
+    public bool AddInventoryItem(InventoryItem inventoryItem)
+    {
+        if (!inventoryItem.isExist) return false;
+        if (item != inventoryItem.item && isExist) return false;
+
+        item = inventoryItem.item;
+        count += inventoryItem.count;
+        isExist = true;
+        Render();
+        inventoryItem.ClearInventoryItem();
+        inventoryItem.Render();
+        
+        return true;
+    }
+
     void SetExist()
     {
         if (count > 0)
