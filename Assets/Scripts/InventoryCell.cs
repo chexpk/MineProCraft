@@ -2,19 +2,11 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class InventoryCell : MonoBehaviour
 {
     [SerializeField] private Image image;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
-    RectTransform rectTransform;
-    private Vector2 basePosition;
-
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
 
     public void Render(InventoryItem inventoryItem)
     {
@@ -63,28 +55,6 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     {
         image.sprite = null;
         countItemInCell.text = " ";
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        Debug.Log("OnPointerDown");
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnBeginDrag");
-        basePosition = rectTransform.anchoredPosition;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnEndDrag");
-        rectTransform.anchoredPosition = basePosition;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        rectTransform.anchoredPosition += eventData.delta;
     }
 }
 
