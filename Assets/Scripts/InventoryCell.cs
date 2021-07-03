@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCell : MonoBehaviour
+public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [SerializeField] private Button button;
+    [SerializeField] private Image image;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
+    RectTransform rectTransform;
+    private Vector2 basePosition;
+
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
 
     public void Render(InventoryItem inventoryItem)
     {
@@ -33,7 +42,7 @@ public class InventoryCell : MonoBehaviour
     void RenderItemPreview(InventoryItem inventoryItem)
     {
         var sprite = inventoryItem.item.inventoryPreview;
-        button.image.sprite = sprite;
+        image.sprite = sprite;
     }
 
     void RenderCountItem(int countItem)
@@ -52,8 +61,30 @@ public class InventoryCell : MonoBehaviour
 
     void ClearCell()
     {
-        button.image.sprite = null;
+        image.sprite = null;
         countItemInCell.text = " ";
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("OnPointerDown");
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnBeginDrag");
+        basePosition = rectTransform.anchoredPosition;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnEndDrag");
+        rectTransform.anchoredPosition = basePosition;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        rectTransform.anchoredPosition += eventData.delta;
     }
 }
 

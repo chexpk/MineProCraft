@@ -27,7 +27,7 @@ public class Voxel : MonoBehaviour
         this.item = item;
     }
 
-    public void DecreaseHealth()
+    public void DecreaseDurability()
     {
         durability--;
         if (durability <= 0)

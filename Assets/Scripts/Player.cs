@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Screen.lockCursor = true;
+        // Screen.lockCursor = true;
     }
 
     void Update()
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CreateVoxel();
+            // CreateVoxel();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();
         if (voxel == null) return;
         // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
-        voxel.DecreaseHealth();
+        voxel.DecreaseDurability();
 
         // voxel.DeleteVoxel();
     }
