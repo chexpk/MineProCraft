@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class ChangedEvent : UnityEvent<string>
+{
+}
 
 [Serializable]
 public class InventoryItem
@@ -9,6 +15,7 @@ public class InventoryItem
     public bool isExist = false;
     public int count = 0;
     public InventoryCell cell;
+    public ChangedEvent changedEvent = new ChangedEvent();
 
     public void Render()
     {
@@ -20,6 +27,7 @@ public class InventoryItem
         count++;
         SetExist();
         Render();
+        changedEvent.Invoke("increase");
     }
 
     public void Decrease()
@@ -30,29 +38,16 @@ public class InventoryItem
         {
             ClearInventoryItem();
         }
-        Render();
+        else
+        {
+            Render();
+            changedEvent.Invoke("decrease");
+        }
     }
 
     public void SetCell(InventoryCell cell)
     {
         this.cell = cell;
-        Render();
-    }
-
-    public void SetInventoryItemInCell()
-    {
-        Render();
-    }
-
-    void ClearInventoryItem()
-    {
-        item = null;
-        isExist = false;
-        count = 0;
-    }
-
-    public void RenderCountItem()
-    {
         Render();
     }
 
@@ -76,10 +71,29 @@ public class InventoryItem
         count += inventoryItem.count;
         isExist = true;
         Render();
-        inventoryItem.ClearInventoryItem();
-        inventoryItem.Render();
+        inventoryItem.ClearSource();
+
+        changedEvent.Invoke("moveto");
 
         return true;
+    }
+
+    void ClearSource()
+    {
+        item = null;
+        isExist = false;
+        count = 0;
+        Render();
+        changedEvent.Invoke("movefrom");
+    }
+
+    public void ClearInventoryItem()
+    {
+        item = null;
+        isExist = false;
+        count = 0;
+        Render();
+        changedEvent.Invoke("clear");
     }
 
     void SetExist()
@@ -93,5 +107,4 @@ public class InventoryItem
             isExist = false;
         }
     }
-
 }

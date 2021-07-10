@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Craft : MonoBehaviour
 {
@@ -8,23 +10,46 @@ public class Craft : MonoBehaviour
     [SerializeField] Recipe[] recipies;
     [SerializeField] InventoryItem output;
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        ListenInventoryItemChanged();
         Draw();
-        var item = TryCook();
-        if (item != null)
+        TryCook();
+        output.changedEvent.AddListener(OnOutputChanged);
+    }
+
+    private void OnOutputChanged(string eventType)
+    {
+        if (eventType == "movefrom")
         {
-            output.item = TryCook();
-            output.Increase();
+            var recipe = CookableRecipe();
+            recipe.Cook(inventoryItems);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void ListenInventoryItemChanged()
     {
-        
+        foreach (var inventoryItem in inventoryItems)
+        {
+            inventoryItem.changedEvent.AddListener(OnInventoryItemChanged);
+        }
+    }
+
+    void OnInventoryItemChanged(string eventType)
+    {
+        Debug.Log("создаю");
+        TryCook();
+    }
+
+    void TryCook()
+    {
+        output.ClearInventoryItem();
+        var recipe = CookableRecipe();
+        if (recipe != null)
+        {
+            output.item = recipe.output;
+            output.Increase();
+        }
     }
 
     void Draw()
@@ -35,13 +60,13 @@ public class Craft : MonoBehaviour
         }
     }
 
-    Item TryCook()
+    Recipe CookableRecipe()
     {
         foreach (var recipe in recipies)
         {
             if (recipe.IsCookable(inventoryItems))
             {
-                return recipe.output;
+                return recipe;
             }
         }
         return null;

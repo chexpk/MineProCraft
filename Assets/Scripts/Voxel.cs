@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Voxel : MonoBehaviour
 {
-    private Item item;
+    [SerializeField] private Item item;
     private int durability = 3;
     //поле здоровья?
 
