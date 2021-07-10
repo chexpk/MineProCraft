@@ -7,6 +7,7 @@ public class InventoryCellDrop : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");
+
         // Debug.Log(eventData.pointerDrag);
         // var rectTransform = GetComponent<RectTransform>();
         // eventData.pointerDrag.transform.SetParent(transform);
@@ -15,12 +16,12 @@ public class InventoryCellDrop : MonoBehaviour, IDropHandler
         // Debug.Log(rectTransform.anchoredPosition);
         // otherRectTransform.anchoredPosition = rectTransform.anchoredPosition;
 
-        var draggable =  eventData.pointerDrag.GetComponent<InventoryCellDrag>();
+        var draggable = eventData.pointerDrag.GetComponent<InventoryCellDrag>();
         var draggableInventoryItem = draggable.GetInventoryItem();
-        Debug.Log(draggableInventoryItem);
-        Debug.Log(inventoryCell.GetInventoryItem());
-
+        // Debug.Log(draggableInventoryItem);
+        // Debug.Log(inventoryCell.GetInventoryItem());
         MoveTo(draggableInventoryItem, inventoryCell.GetInventoryItem());
+        Debug.Log(draggableInventoryItem == inventoryCell.GetInventoryItem());
     }
 
     void MoveTo(InventoryItem from, InventoryItem to)

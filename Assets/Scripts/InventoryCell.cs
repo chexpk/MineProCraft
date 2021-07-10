@@ -7,7 +7,7 @@ public class InventoryCell : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private GameObject selectedFrame;
     [SerializeField] private Text countItemInCell;
-    private InventoryItem inventoryItem;
+    [SerializeField] private InventoryItem inventoryItem;
 
 
     public void Render(InventoryItem inventoryItem)

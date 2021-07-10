@@ -68,6 +68,7 @@ public class InventoryItem
 
     public bool AddInventoryItem(InventoryItem inventoryItem)
     {
+        if (inventoryItem == this) return false;
         if (!inventoryItem.isExist) return false;
         if (item != inventoryItem.item && isExist) return false;
 
@@ -77,7 +78,7 @@ public class InventoryItem
         Render();
         inventoryItem.ClearInventoryItem();
         inventoryItem.Render();
-        
+
         return true;
     }
 
