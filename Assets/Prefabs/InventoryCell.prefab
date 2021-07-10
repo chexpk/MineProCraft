@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5062007870517326544}
   - component: {fileID: 6502347158727591164}
-  - component: {fileID: 8168495282209903720}
+  - component: {fileID: 188862509695961689}
   m_Layer: 0
   m_Name: InventoryCell
   m_TagString: Untagged
@@ -55,7 +55,12 @@ MonoBehaviour:
   image: {fileID: 2260532946728292224}
   selectedFrame: {fileID: 4155830468151991071}
   countItemInCell: {fileID: 7662273498396934152}
---- !u!114 &8168495282209903720
+  inventoryItem:
+    item: {fileID: 0}
+    isExist: 0
+    count: 0
+    cell: {fileID: 0}
+--- !u!114 &188862509695961689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -201,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -368,7 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
