@@ -496,6 +496,36 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1905091156}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &388098715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 388098716}
+  m_Layer: 0
+  m_Name: HandPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &388098716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388098715}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.396, y: 0.21100044, z: 0.783}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1200274274}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &438646299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1248,7 +1278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841138179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 30, z: -2.8}
+  m_LocalPosition: {x: 0, y: 8, z: -2.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1786231521}
@@ -1289,6 +1319,9 @@ MonoBehaviour:
   voxelPref: {fileID: 250690492246787258, guid: 764e10cd33248448eae89b8fd74703f8,
     type: 3}
   inventory: {fileID: 1606092648}
+  particleHit: {fileID: 207153805793606713, guid: 0dd49371f77b446fc9f78e26acd7a2eb,
+    type: 3}
+  handPoint: {fileID: 0}
 --- !u!143 &841138184
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2042,7 +2075,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 388098716}
   m_Father: {fileID: 841138181}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2734,38 +2768,65 @@ MonoBehaviour:
     isExist: 1
     count: 3
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 11400000, guid: 71e6a4e4a7a7349c6bca832a31b6f312, type: 2}
     isExist: 1
     count: 3
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - item: {fileID: 11400000, guid: cb3e3719eef33499ab1742dd278664ff, type: 2}
+    isExist: 1
+    count: 5
+    cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 0}
-  - item: {fileID: 0}
-    isExist: 0
-    count: 0
-    cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   cells:
   - {fileID: 1835332101}
   - {fileID: 1145644003}
@@ -2781,6 +2842,9 @@ MonoBehaviour:
     isExist: 0
     count: 0
     cell: {fileID: 0}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!4 &1606092649
 Transform:
   m_ObjectHideFlags: 0
@@ -3192,45 +3256,77 @@ MonoBehaviour:
     isExist: 0
     count: 0
     cell: {fileID: 498803923}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 11400000, guid: 17410bc1a184a4025a997661b83f9320, type: 2}
     isExist: 1
     count: 1
     cell: {fileID: 1897244762}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 755698468}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 851730699}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 11400000, guid: 71e6a4e4a7a7349c6bca832a31b6f312, type: 2}
     isExist: 1
     count: 1
     cell: {fileID: 1458265940}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 1950880631}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 1499774005}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 1364814284}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 2115940017}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
   recipies:
   - {fileID: 11400000, guid: 417f26a9089264d7fb359393908041b8, type: 2}
+  - {fileID: 11400000, guid: 3975f94d1ad7940e69ab0d401758cd9f, type: 2}
+  - {fileID: 11400000, guid: 1242644185b884d429ab1af9908e3f68, type: 2}
   output:
     item: {fileID: 0}
     isExist: 0
     count: 0
     cell: {fileID: 449770581}
+    changedEvent:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!4 &1848491656
 Transform:
   m_ObjectHideFlags: 0

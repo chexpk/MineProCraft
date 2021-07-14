@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
     {
     public Camera camera;
     public GameObject voxelPref;
-    [SerializeField]
-    private Inventory inventory;
+    [SerializeField] private Inventory inventory;
     PlacePoint oldHitedPP = null;
+
+    [SerializeField] GameObject particleHit;
+    [SerializeField] GameObject handPoint;
+
 
     void Start()
     {
@@ -26,7 +29,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // CreateVoxel();
+            CreateVoxel();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -45,12 +48,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    //TODO: это не удаление, это удар - изменить в соответствии со смыслом
     void DeleteVoxel()
     {
         RaycastHit hit;
 
         if (RaycastMousePosition(out hit))
         {
+            Debug.Log(hit.point);
+            Instantiate(particleHit, hit.point, Quaternion.identity);
             DeleteVoxelOnHit(hit);
         }
     }
