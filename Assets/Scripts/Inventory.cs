@@ -9,6 +9,42 @@ public class Inventory : MonoBehaviour
     public InventoryCell[] cells;
     public InventoryItem currentInventoryItem;
 
+
+    public bool CollectItem(Item item)
+    {
+        var inventoryItem = FindInventoryItem(item);
+        if (inventoryItem != null)
+        {
+            //в перспективе добавить проверку на заполненность
+            inventoryItem.Increase();
+            return true;
+        }
+
+        var emptyInventoryItem = FindFirstEmptyInventoryItem();
+        if (emptyInventoryItem != null)
+        {
+            emptyInventoryItem.item = item;
+            emptyInventoryItem.Increase();
+            return true;
+        }
+        return false;
+    }
+
+    public void DecreaseCountItem()
+    {
+        currentInventoryItem.Decrease();
+    }
+
+    public GameObject GetCurrentItemPrefab()
+    {
+        return currentInventoryItem.item.prefab;
+    }
+
+    public bool IsCurrentInventoryItemExist()
+    {
+        return currentInventoryItem.isExist;
+    }
+
     private void Start()
     {
         SetInventoryItemsToCells();
@@ -88,26 +124,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool CollectItem(Item item)
-    {
-        var inventoryItem = FindInventoryItem(item);
-        if (inventoryItem != null)
-        {
-            //в перспективе добавить проверку на заполненность
-            inventoryItem.Increase();
-            return true;
-        }
-
-        var emptyInventoryItem = FindFirstEmptyInventoryItem();
-        if (emptyInventoryItem != null)
-        {
-            emptyInventoryItem.item = item;
-            emptyInventoryItem.Increase();
-            return true;
-        }
-        return false;
-    }
-
     InventoryItem FindInventoryItem(Item item)
     {
         foreach (var currentItem in items)
@@ -132,13 +148,8 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public void DecreaseCountItem()
+    public bool IsAmmunitionExist()
     {
-        currentInventoryItem.Decrease();
-    }
-
-    public GameObject GetCurrentItemPrefab()
-    {
-        return currentInventoryItem.item.prefab;
+        return true;
     }
 }

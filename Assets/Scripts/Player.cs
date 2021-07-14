@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject particleHit;
     [SerializeField] GameObject handPoint;
 
+    //TODO: удалить после настройки выстрела - заменить на метод в inventory
+    public GameObject ammoPre;
+
 
     void Start()
     {
@@ -29,7 +32,8 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CreateVoxel();
+            // CreateVoxel();
+            Interact();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -40,11 +44,56 @@ public class Player : MonoBehaviour
 
     void CreateVoxel()
     {
+        //  является тул
+        // if (IsTool())
+        //{
+        //    TryShoot();
+        //}
         RaycastHit hit;
 
         if (RaycastMousePosition(out hit))
         {
             CreateVoxelOnHit(hit);
+        }
+    }
+
+    void Interact()
+    {
+        if (inventory.IsCurrentInventoryItemExist())
+        {
+            if (inventory.currentInventoryItem.item.itemTyp == "tool")
+            {
+                TryShoot();
+            }
+
+            if (inventory.currentInventoryItem.item.itemTyp == "block")
+            {
+                RaycastHit hit;
+
+                if (RaycastMousePosition(out hit))
+                {
+                    CreateVoxelOnHit(hit);
+                }
+            }
+        }
+
+    }
+
+    void TryShoot()
+    {
+        //существует,в инвентаре есть боезапас
+        // ЗапускСтрелы()
+        //
+        if (inventory.IsAmmunitionExist())
+        {
+            //var ammPref = inventory.GetCurrentAmmoPref();
+            var arrow = Instantiate(ammoPre, handPoint.transform.position, Quaternion.identity);
+            arrow.transform.rotation = handPoint.transform.rotation;
+            var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
+            var forcePower = 9f;
+            rigidbodyArrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
+            // arrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
+
         }
     }
 
@@ -55,8 +104,9 @@ public class Player : MonoBehaviour
 
         if (RaycastMousePosition(out hit))
         {
-            Debug.Log(hit.point);
+            //TODO: обернуть и откорректировать
             Instantiate(particleHit, hit.point, Quaternion.identity);
+
             DeleteVoxelOnHit(hit);
         }
     }
@@ -82,21 +132,14 @@ public class Player : MonoBehaviour
         DecreaseCountItem();
     }
 
-    void DeleteVoxelOnHit(RaycastHit hit) // rename InteractVoxelOnHit or HitVoxelOnHit ?
+    void DeleteVoxelOnHit(RaycastHit hit) // TODO rename InteractVoxelOnHit or HitVoxelOnHit ?
     {
         GameObject parentHittedGO = hit.transform.parent.gameObject;
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();
         if (voxel == null) return;
         // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
         voxel.DecreaseDurability();
-
-        // voxel.DeleteVoxel();
     }
-
-    // void DecreaseVoxelDurability(Voxel voxel)
-    // {
-    //     voxel.DecreaseHealth();
-    // }
 
     void RaycastSelectPlacePoint ()
     {
