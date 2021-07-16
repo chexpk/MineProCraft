@@ -76,7 +76,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
     }
 
     void TryShoot()
@@ -88,12 +87,12 @@ public class Player : MonoBehaviour
         {
             //var ammPref = inventory.GetCurrentAmmoPref();
             var arrow = Instantiate(ammoPre, handPoint.transform.position, Quaternion.identity);
-            arrow.transform.rotation = handPoint.transform.rotation;
+            // arrow.transform.rotation = handPoint.transform.rotation;
             var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
             var forcePower = 9f;
-            rigidbodyArrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
-            // arrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
-
+            // rigidbodyArrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
+            rigidbodyArrow.velocity = camera.transform.forward * forcePower;
+            arrow.transform.rotation = Quaternion.LookRotation(rigidbodyArrow.velocity);
         }
     }
 
