@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8ad9f7cee61464c8bbc1bd351dc8403, type: 3}
-  m_Name: Item
+  m_Name: ArrowItem
   m_EditorClassIdentifier: 
   name: arrow
   prefab: {fileID: 6522812125439467130, guid: 128270e78f5074394a9f9965803c64ce, type: 3}

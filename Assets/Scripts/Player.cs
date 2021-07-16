@@ -1,7 +1,13 @@
 using System;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
+
+[System.Serializable]
+public class SoundEvent : UnityEvent<string>
+{
+}
 
 public class Player : MonoBehaviour
     {
@@ -13,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject particleHit;
     [SerializeField] GameObject handPoint;
     [SerializeField] GameObject currentHandItem;
+
+    public SoundEvent soundEvent = new SoundEvent();
 
 
 
@@ -76,6 +84,7 @@ public class Player : MonoBehaviour
             var arrowPref = arrowItem.item.prefab;
             CreateArrow(arrowPref);
             DecreaseCountThisItem(arrowItem);
+            soundEvent.Invoke("shoot");
         }
     }
 
@@ -131,6 +140,7 @@ public class Player : MonoBehaviour
         if (voxel == null) return;
         // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
         voxel.DecreaseDurability();
+        soundEvent.Invoke("hit");
     }
 
     void RaycastSelectPlacePoint ()
