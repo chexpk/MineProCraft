@@ -12,14 +12,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject particleHit;
     [SerializeField] GameObject handPoint;
+    [SerializeField] GameObject currentHandItem;
 
-    //TODO: удалить после настройки выстрела - заменить на метод в inventory
-    public GameObject ammoPre;
 
 
     void Start()
     {
         // Screen.lockCursor = true;
+        inventory.currentInventoryItemChanged.AddListener(HandPlaceRender);
     }
 
     void Update()
@@ -44,11 +44,6 @@ public class Player : MonoBehaviour
 
     void CreateVoxel()
     {
-        //  является тул
-        // if (IsTool())
-        //{
-        //    TryShoot();
-        //}
         RaycastHit hit;
 
         if (RaycastMousePosition(out hit))
@@ -68,32 +63,30 @@ public class Player : MonoBehaviour
 
             if (inventory.currentInventoryItem.item.itemTyp == "block")
             {
-                RaycastHit hit;
-
-                if (RaycastMousePosition(out hit))
-                {
-                    CreateVoxelOnHit(hit);
-                }
+                CreateVoxel();
             }
         }
     }
 
     void TryShoot()
     {
-        //существует,в инвентаре есть боезапас
-        // ЗапускСтрелы()
-        //
-        if (inventory.IsAmmunitionExist())
+        var arrowItem = inventory.GetArrowFromInventory();
+        if (arrowItem != null)
         {
-            //var ammPref = inventory.GetCurrentAmmoPref();
-            var arrow = Instantiate(ammoPre, handPoint.transform.position, Quaternion.identity);
-            // arrow.transform.rotation = handPoint.transform.rotation;
-            var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
-            var forcePower = 9f;
-            // rigidbodyArrow.AddForce(arrow.transform.forward * forcePower, ForceMode.Impulse);
-            rigidbodyArrow.velocity = camera.transform.forward * forcePower;
-            arrow.transform.rotation = Quaternion.LookRotation(rigidbodyArrow.velocity);
+            var arrowPref = arrowItem.item.prefab;
+            CreateArrow(arrowPref);
+            DecreaseCountThisItem(arrowItem);
         }
+    }
+
+    //TODO вероятно вынести в отдельный класс
+    void CreateArrow(GameObject arrowPref)
+    {
+        var arrow = Instantiate(arrowPref, handPoint.transform.position, Quaternion.identity);
+        var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
+        var forcePower = 9f;
+        rigidbodyArrow.velocity = camera.transform.forward * forcePower;
+        arrow.transform.rotation = Quaternion.LookRotation(rigidbodyArrow.velocity);
     }
 
     //TODO: это не удаление, это удар - изменить в соответствии со смыслом
@@ -202,8 +195,32 @@ public class Player : MonoBehaviour
         inventory.DecreaseCountItem();
     }
 
+    void DecreaseCountThisItem(InventoryItem inventoryItem)
+    {
+        inventoryItem.Decrease();
+    }
+
     GameObject GetCurrentPrefab()
     {
         return inventory.GetCurrentItemPrefab();
+    }
+
+    void HandPlaceRender()
+    {
+        var newItemInHand = GetHandPref();
+        if (newItemInHand != null)
+        {
+            Destroy(currentHandItem);
+            currentHandItem = Instantiate(newItemInHand, handPoint.transform);
+        }
+        else
+        {
+            Destroy(currentHandItem);
+        }
+    }
+
+    private GameObject GetHandPref()
+    {
+        return inventory.GetCurrentItemHandPrefab();
     }
 }

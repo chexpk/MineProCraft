@@ -24,7 +24,6 @@ public class Arrow : MonoBehaviour
     {
         isHitSomething = true;
         Stick();
-        Debug.Log(gameObject);
         Destroy(gameObject, 5f);
     }
 

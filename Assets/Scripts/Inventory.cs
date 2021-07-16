@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Inventory : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Inventory : MonoBehaviour
     public InventoryItem[] items = new InventoryItem[maxInventoryItems];
     public InventoryCell[] cells;
     public InventoryItem currentInventoryItem;
+
+    public UnityEvent currentInventoryItemChanged = new UnityEvent();
 
 
     public bool CollectItem(Item item)
@@ -36,6 +39,10 @@ public class Inventory : MonoBehaviour
     }
 
     public GameObject GetCurrentItemPrefab()
+    {
+        return currentInventoryItem.item.prefab;
+    }
+    public GameObject GetCurrentItemHandPrefab()
     {
         return currentInventoryItem.item.prefab;
     }
@@ -109,9 +116,25 @@ public class Inventory : MonoBehaviour
 
     void SelectItem(int index)
     {
+        RemoveInventoryItemListenerForRenderHand(currentInventoryItem);
+
         currentInventoryItem = items[index];
         UnSelectAllInventory();
         currentInventoryItem.Select();
+
+        currentInventoryItemChanged.Invoke();
+        currentInventoryItem.changedEvent.AddListener(InvokeForCurrentInventoryItemChanged);
+    }
+
+    void InvokeForCurrentInventoryItemChanged(string something)
+    {
+        currentInventoryItemChanged.Invoke();
+    }
+
+    void RemoveInventoryItemListenerForRenderHand(InventoryItem inventoryItem)
+    {
+        inventoryItem.changedEvent.RemoveListener(InvokeForCurrentInventoryItemChanged);
+
     }
 
     private void UnSelectAllInventory()
@@ -148,8 +171,15 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-    public bool IsAmmunitionExist()
+    public InventoryItem GetArrowFromInventory()
     {
-        return true;
+        foreach (var inventoryItem in items)
+        {
+            if (inventoryItem.isExist && inventoryItem.item.name == "arrow")
+            {
+                return inventoryItem;
+            }
+        }
+        return null;
     }
 }

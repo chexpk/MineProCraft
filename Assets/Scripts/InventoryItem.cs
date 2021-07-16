@@ -89,6 +89,8 @@ public class InventoryItem
 
     public void ClearInventoryItem()
     {
+        //TODO вставить новые поля item
+
         item = null;
         isExist = false;
         count = 0;
