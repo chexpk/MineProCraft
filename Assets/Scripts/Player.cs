@@ -15,15 +15,13 @@ public class Player : MonoBehaviour
     PlacePoint oldHitedPP = null;
 
     [SerializeField] GameObject particleHit;
-    [SerializeField] GameObject handPoint;
-    [SerializeField] GameObject currentHandItem;
+    [SerializeField] GameObject shootPoint;
 
     public SoundEvent soundEvent = new SoundEvent();
 
     void Start()
     {
-        // Screen.lockCursor = true;
-        inventory.currentInventoryItemChanged.AddListener(HandPlaceRender);
+        Screen.lockCursor = true;
     }
 
     void Update()
@@ -84,7 +82,7 @@ public class Player : MonoBehaviour
     //TODO вероятно вынести в отдельный класс
     void CreateArrow(GameObject arrowPref)
     {
-        var arrow = Instantiate(arrowPref, handPoint.transform.position, Quaternion.identity);
+        var arrow = Instantiate(arrowPref, shootPoint.transform.position, Quaternion.identity);
         var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
         var forcePower = 20f;
         rigidbodyArrow.velocity = camera.transform.forward * forcePower;
@@ -206,22 +204,7 @@ public class Player : MonoBehaviour
         return inventory.GetCurrentItemPrefab();
     }
 
-    void HandPlaceRender()
-    {
-        var newItemInHand = GetHandPref();
-        if (newItemInHand != null)
-        {
-            Destroy(currentHandItem);
-            currentHandItem = Instantiate(newItemInHand, handPoint.transform);
-        }
-        else
-        {
-            Destroy(currentHandItem);
-        }
-    }
 
-    private GameObject GetHandPref()
-    {
-        return inventory.GetCurrentItemHandPrefab();
-    }
+
+
 }
