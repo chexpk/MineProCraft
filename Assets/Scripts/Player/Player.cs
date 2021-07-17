@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject particleHit;
     [SerializeField] GameObject shootPoint;
 
+    private bool isTimeSlow = false;
+
     void Start()
     {
         Screen.lockCursor = true;
@@ -33,6 +35,25 @@ public class Player : MonoBehaviour
         {
             DeleteVoxel();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            SlowTime();
+        }
+    }
+
+    void SlowTime()
+    {
+        if (isTimeSlow)
+        {
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            Time.timeScale = 0.1f;
+        }
+
+        isTimeSlow = !isTimeSlow;
     }
 
     void CreateVoxel()
