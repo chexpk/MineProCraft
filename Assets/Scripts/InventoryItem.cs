@@ -1,12 +1,4 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-
-[System.Serializable]
-public class ChangedEvent : UnityEvent<string>
-{
-}
 
 [Serializable]
 public class InventoryItem
@@ -15,7 +7,7 @@ public class InventoryItem
     public bool isExist = false;
     public int count = 0;
     public InventoryCell cell;
-    public ChangedEvent changedEvent = new ChangedEvent();
+    public StringEvent changedEvent = new StringEvent();
 
     public void Render()
     {

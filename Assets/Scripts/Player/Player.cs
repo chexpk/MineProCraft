@@ -2,14 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class SoundEvent : UnityEvent<string>
-{
-}
-
 public class Player : MonoBehaviour
 {
-    public SoundEvent soundEvent = new SoundEvent();
+    public StringEvent soundEvent = new StringEvent();
 
     [SerializeField] Camera camera;
     [SerializeField] private Inventory inventory;
@@ -92,6 +87,7 @@ public class Player : MonoBehaviour
         {
             //TODO: обернуть и откорректировать
             Instantiate(particleHit, hit.point, Quaternion.identity);
+            soundEvent.Invoke("hit");
             DeleteVoxelOnHit(hit);
         }
     }
@@ -125,7 +121,6 @@ public class Player : MonoBehaviour
         if (voxel == null) return;
         // тут проверка "здоровья" + ошибка при попытке удалить что-то кроме вокселя
         voxel.DecreaseDurability();
-        soundEvent.Invoke("hit");
     }
 
     void DecreaseCountItem()

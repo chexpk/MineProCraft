@@ -35,6 +35,4 @@ public class Voxel : MonoBehaviour
             DeleteVoxel();
         }
     }
-
-
 }
