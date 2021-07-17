@@ -1,16 +1,14 @@
 using System;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-[System.Serializable]
+[Serializable]
 public class SoundEvent : UnityEvent<string>
 {
 }
 
 public class Player : MonoBehaviour
-    {
+{
     public Camera camera;
     public GameObject voxelPref;
     [SerializeField] private Inventory inventory;
@@ -21,8 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject currentHandItem;
 
     public SoundEvent soundEvent = new SoundEvent();
-
-
 
     void Start()
     {
@@ -52,9 +48,7 @@ public class Player : MonoBehaviour
 
     void CreateVoxel()
     {
-        RaycastHit hit;
-
-        if (RaycastMousePosition(out hit))
+        if (RaycastMousePosition(out var hit))
         {
             CreateVoxelOnHit(hit);
         }
@@ -64,12 +58,12 @@ public class Player : MonoBehaviour
     {
         if (inventory.IsCurrentInventoryItemExist())
         {
-            if (inventory.currentInventoryItem.item.itemTyp == "tool")
+            if (inventory.currentInventoryItem.item.itemType == "tool")
             {
                 TryShoot();
             }
 
-            if (inventory.currentInventoryItem.item.itemTyp == "block")
+            if (inventory.currentInventoryItem.item.itemType == "block")
             {
                 CreateVoxel();
             }
@@ -79,13 +73,12 @@ public class Player : MonoBehaviour
     void TryShoot()
     {
         var arrowItem = inventory.GetArrowFromInventory();
-        if (arrowItem != null)
-        {
-            var arrowPref = arrowItem.item.prefab;
-            CreateArrow(arrowPref);
-            DecreaseCountThisItem(arrowItem);
-            soundEvent.Invoke("shoot");
-        }
+        if (arrowItem == null) return;
+
+        var arrowPref = arrowItem.item.prefab;
+        CreateArrow(arrowPref);
+        DecreaseCountThisItem(arrowItem);
+        soundEvent.Invoke("shoot");
     }
 
     //TODO вероятно вынести в отдельный класс
@@ -93,7 +86,7 @@ public class Player : MonoBehaviour
     {
         var arrow = Instantiate(arrowPref, handPoint.transform.position, Quaternion.identity);
         var rigidbodyArrow = arrow.GetComponent<Rigidbody>();
-        var forcePower = 9f;
+        var forcePower = 20f;
         rigidbodyArrow.velocity = camera.transform.forward * forcePower;
         arrow.transform.rotation = Quaternion.LookRotation(rigidbodyArrow.velocity);
     }
@@ -101,13 +94,10 @@ public class Player : MonoBehaviour
     //TODO: это не удаление, это удар - изменить в соответствии со смыслом
     void DeleteVoxel()
     {
-        RaycastHit hit;
-
-        if (RaycastMousePosition(out hit))
+        if (RaycastMousePosition(out var hit))
         {
             //TODO: обернуть и откорректировать
             Instantiate(particleHit, hit.point, Quaternion.identity);
-
             DeleteVoxelOnHit(hit);
         }
     }
@@ -133,7 +123,8 @@ public class Player : MonoBehaviour
         DecreaseCountItem();
     }
 
-    void DeleteVoxelOnHit(RaycastHit hit) // TODO rename InteractVoxelOnHit or HitVoxelOnHit ?
+    // TODO rename InteractVoxelOnHit or HitVoxelOnHit ?
+    void DeleteVoxelOnHit(RaycastHit hit)
     {
         GameObject parentHittedGO = hit.transform.parent.gameObject;
         Voxel voxel = parentHittedGO.GetComponent<Voxel>();

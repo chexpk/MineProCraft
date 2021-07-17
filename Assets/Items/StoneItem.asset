@@ -17,4 +17,4 @@ MonoBehaviour:
   inventoryPreview: {fileID: 21300000, guid: 61b6d554338454cceaa0135c956938bf, type: 3}
   miniPrefab: {fileID: 7619018010384302576, guid: 675413d312e1f4b2d9198425ab0fb4cd,
     type: 3}
-  itemTyp: block
+  itemType: block

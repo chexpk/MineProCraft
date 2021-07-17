@@ -7,5 +7,5 @@ public class Item : ScriptableObject
     public GameObject prefab;
     public Sprite inventoryPreview;
     public GameObject miniPrefab;
-    public string itemTyp;
+    public string itemType;
 }

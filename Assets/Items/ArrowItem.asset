@@ -17,4 +17,4 @@ MonoBehaviour:
   inventoryPreview: {fileID: 21300000, guid: ffd82da71e6a0469690d0f92072ed0ba, type: 3}
   miniPrefab: {fileID: 6522812125439467130, guid: 128270e78f5074394a9f9965803c64ce,
     type: 3}
-  itemTyp: tool
+  itemType: tool
