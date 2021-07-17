@@ -506,7 +506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 388098716}
   m_Layer: 0
-  m_Name: HandPoint
+  m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1247,6 +1247,9 @@ GameObject:
   - component: {fileID: 841138183}
   - component: {fileID: 841138184}
   - component: {fileID: 841138185}
+  - component: {fileID: 841138186}
+  - component: {fileID: 841138187}
+  - component: {fileID: 841138188}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1316,17 +1319,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4172e48cb248eda6ec81f2bba7b9b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1786231520}
-  voxelPref: {fileID: 250690492246787258, guid: 764e10cd33248448eae89b8fd74703f8,
-    type: 3}
-  inventory: {fileID: 1606092648}
-  particleHit: {fileID: 207153805793606713, guid: 0dd49371f77b446fc9f78e26acd7a2eb,
-    type: 3}
-  handPoint: {fileID: 388098715}
-  currentHandItem: {fileID: 0}
   soundEvent:
     m_PersistentCalls:
       m_Calls: []
+  camera: {fileID: 1786231520}
+  inventory: {fileID: 1606092648}
+  particleHit: {fileID: 207153805793606713, guid: 0dd49371f77b446fc9f78e26acd7a2eb,
+    type: 3}
+  shootPoint: {fileID: 388098715}
 --- !u!143 &841138184
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1361,6 +1361,46 @@ MonoBehaviour:
   player: {fileID: 841138183}
   shoot: {fileID: 8300000, guid: 8c9dce272bd084a358a03c208e5fe79e, type: 3}
   hit: {fileID: 8300000, guid: b622428d5c97e43918124bfdb0cfe044, type: 3}
+--- !u!114 &841138186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841138179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91261acd75a4013883c87ca45ecb311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handPoint: {fileID: 1979862406}
+  inventory: {fileID: 1606092648}
+--- !u!114 &841138187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841138179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94da4dacaf2446cfa4cd39ecf5441383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1786231520}
+--- !u!114 &841138188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841138179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96cd490cfd4040e88c6f3468985f818a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 1606092648}
 --- !u!224 &851730698 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5062007870517326544, guid: 96b888ddba708488d8788d212e0e3258,
@@ -2096,7 +2136,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1979862407}
   m_Father: {fileID: 841138181}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4012,6 +4053,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96b888ddba708488d8788d212e0e3258, type: 3}
+--- !u!1 &1979862406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979862407}
+  m_Layer: 0
+  m_Name: HandPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1979862407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979862406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.39, y: 0.013, z: 0.377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1200274274}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066311966
 GameObject:
   m_ObjectHideFlags: 0

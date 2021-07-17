@@ -9,15 +9,12 @@ public class SoundEvent : UnityEvent<string>
 
 public class Player : MonoBehaviour
 {
-    public Camera camera;
-    public GameObject voxelPref;
-    [SerializeField] private Inventory inventory;
-    PlacePoint oldHitedPP = null;
+    public SoundEvent soundEvent = new SoundEvent();
 
+    [SerializeField] Camera camera;
+    [SerializeField] private Inventory inventory;
     [SerializeField] GameObject particleHit;
     [SerializeField] GameObject shootPoint;
-
-    public SoundEvent soundEvent = new SoundEvent();
 
     void Start()
     {
@@ -26,7 +23,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        RaycastSelectPlacePoint();
         CreateMode();
     }
 
@@ -132,63 +128,6 @@ public class Player : MonoBehaviour
         soundEvent.Invoke("hit");
     }
 
-    void RaycastSelectPlacePoint ()
-    {
-        RaycastHit hit;
-
-        if (RaycastMousePosition(out hit))
-        {
-            SelectPlacePointOnHit(hit);
-        }
-        else
-        {
-            UnSelectPlacePoint(oldHitedPP);
-            oldHitedPP = null;
-        }
-    }
-
-    void SelectPlacePointOnHit(RaycastHit hit)
-    {
-        var placePoint = hit.collider.gameObject.GetComponent<PlacePoint>();
-
-        if (placePoint == oldHitedPP) return;
-        if (placePoint == null)
-        {
-            UnSelectPlacePoint(oldHitedPP);
-            oldHitedPP = null;
-            return;
-        }
-
-        UnSelectPlacePoint(oldHitedPP);
-        placePoint.SelectPoint();
-        oldHitedPP = placePoint;
-    }
-
-    void UnSelectPlacePoint(PlacePoint placePoint)
-    {
-        if (placePoint == null) return;
-
-        placePoint.UnSelectPoint();
-    }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.CompareTag("MiniBlock"))
-        {
-            CollectMiniBlock(hit.gameObject);
-        }
-    }
-
-    void CollectMiniBlock(GameObject miniBlock)
-    {
-        MiniBlock block = miniBlock.GetComponent<MiniBlock>();
-        var item = block.GetItem();
-        if (block.IsExist() && inventory.CollectItem(item))
-        {
-            block.DeleteMiniBlock();
-        }
-    }
-
     void DecreaseCountItem()
     {
         inventory.DecreaseCountItem();
@@ -203,8 +142,4 @@ public class Player : MonoBehaviour
     {
         return inventory.GetCurrentItemPrefab();
     }
-
-
-
-
 }

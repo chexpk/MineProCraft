@@ -12,16 +12,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip shoot;
     public AudioClip hit;
 
-    // Start is called before the first frame update
     void Start()
     {
         player.soundEvent.AddListener(PlaySound);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void PlaySound(string nameEvent)
@@ -35,6 +28,4 @@ public class AudioManager : MonoBehaviour
             audioSource.PlayOneShot(hit);
         }
     }
-
-
 }
